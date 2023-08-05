@@ -3,8 +3,8 @@ WORKDIR /pokemonapijectapi
 COPY . /pokemonapijectapi/
 RUN mvn clean package
 
-FROM openjdk:17-oracle
+FROM openjdk:17-alpine
 WORKDIR /pokemonapijectapi
 COPY --from=build /pokemonapijectapi/target/*.jar /pokemonapijectapi/Pokemonapijectapi-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","Pokemonapijectapi.jar"]
+ENTRYPOINT ["java","-jar","Pokemonapijectapi-0.0.1-SNAPSHOT.jar"]
