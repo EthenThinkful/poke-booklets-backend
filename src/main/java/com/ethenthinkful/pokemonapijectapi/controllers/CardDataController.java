@@ -25,17 +25,30 @@ public class CardDataController {
 		this.userDataRepository = userDataRepository;
 	}
 
-	@PostMapping("/cards")
-	public CardData saveCardData(@RequestBody CardDataRequest request) {
-		UserData userData = userDataRepository.findById(request.getUserDataId()).get();
-		CardData cardData = new CardData();
-		cardData.setPokemonCard(request.pokemonCard());
-		cardData.setUserData(userData);
-		return cardDataRepository.save(cardData);
+	// @PostMapping("/cards")
+	// public CardData saveCardData(@RequestBody CardDataRequest request) {
+	// 	System.out.println("Hello! you've hit /cards!");
+	// 	UserData userData = userDataRepository.findById(request.getUserDataId()).get();
+	// 	CardData cardData = new CardData();
+	// 	cardData.setPokemonCard(request.pokemonCard());
+	// 	cardData.setUserData(userData);
+	// 	return cardDataRepository.save(cardData);
+	// }
+
+	@GetMapping("/cards/{userDataId}/{pokemonCard}")
+	public List<CardData> getCardData(@PathVariable("userDataId") int userDataId, @PathVariable("pokemonCard") String pokemonCard) {
+		System.out.println("Hello! you've hit /cards!/userID (before the query)");
+		//List<CardData> cardData = cardDataRepository.findByUserDataId(userDataId);
+		List<CardData> cardData = cardDataRepository.findByUserDataIdAndPokemonCardOrderByMeasuredDateTime(userDataId, pokemonCard);
+		System.out.println("Hello! you've hit /cards!/userID (after the query)");
+		return cardData;
 	}
 
 	@GetMapping("/cards/{userDataId}")
-	public List<CardData> getCardData(@PathVariable("userDataId") int userDataId) {
-		return cardDataRepository.findByUserDataId(userDataId);
+	public List<CardData> getSingleCardData(@PathVariable("userDataId") int userDataId) {
+		System.out.println("Hello! you've hit /cards!/userID (before the query)");
+		List<CardData> cardData = cardDataRepository.findByUserDataId(userDataId);
+		System.out.println("Hello! you've hit /cards!/userID (after the query)");
+		return cardData;
 	}
 }

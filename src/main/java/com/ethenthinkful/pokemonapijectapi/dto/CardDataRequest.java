@@ -1,18 +1,19 @@
 package com.ethenthinkful.pokemonapijectapi.dto;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CardDataRequest {
-	private List<String> pokemonCard;
+	// private List<String> pokemonCard;
+	private String pokemonCard;
 	private int userDataId;
 
-	public List<String> pokemonCard(){
-        return pokemonCard;
-    }
+    public String pokemonCard(){
+		return pokemonCard;
+	}
 
-	public void setPokemonCard(List<String> pokemonCard){
-        this.pokemonCard = pokemonCard;
-    }
+	public void setPokemonCard(String pokemonCard){
+		this.pokemonCard = pokemonCard;
+	}
 
 	public int getUserDataId() {
 		return userDataId;

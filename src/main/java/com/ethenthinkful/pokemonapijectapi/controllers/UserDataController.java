@@ -39,7 +39,7 @@ public class UserDataController {
 		return UserDataRepository.findAll();
 	}
 
-	@RequestMapping(value = "/users/{id}")
+	@RequestMapping(value = "/users/{id}", method=RequestMethod.GET)
 	public UserData getUserData(@PathVariable("id") int id) {
 		return UserDataRepository.findById(id).get();
 	}
