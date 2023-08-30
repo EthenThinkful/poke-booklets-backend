@@ -9,6 +9,8 @@ import com.ethenthinkful.pokemonapijectapi.model.CardData;
 import com.ethenthinkful.pokemonapijectapi.model.UserData;
 import com.ethenthinkful.pokemonapijectapi.repos.CardDataRepository;
 import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
+import com.ethenthinkful.pokemonapijectapi.service.CardService;
+
 
 @RestController
 @RequestMapping("/api")
@@ -16,6 +18,8 @@ import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
 public class CardDataController {
 	private CardDataRepository cardDataRepository;
 	private UserDataRepository userDataRepository;
+
+
 
 	CardDataController(CardDataRepository cardDataRepository, UserDataRepository userDataRepository) {
 		this.cardDataRepository = cardDataRepository;
@@ -40,8 +44,16 @@ public class CardDataController {
 	// 	return cardData;
 	// }
 
-	@GetMapping("/cards/{userDataId}")
-	public void getSingleCardData(@PathVariable("userDataId") int userDataId) {
-		System.out.println("Hello! you've hit /cards!/userID (before the query)");
+	@RequestMapping(value="/cards/{userDataId}", method=RequestMethod.GET)
+	public List<CardData> getSingleCardData(@PathVariable("userDataId") int userDataId) {
+		//return CardService.getCardById(userDataId);
+
+		List<CardData> cardDataList = cardDataRepository.findByUserdataId(userDataId);
+		// System.out.println("Hello! you've hit /cards!/userID (after the query)");
+		// System.out.println(cardDataList);
+		// //System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cardData));
+		return cardDataList;
+
 	}
+
 }
