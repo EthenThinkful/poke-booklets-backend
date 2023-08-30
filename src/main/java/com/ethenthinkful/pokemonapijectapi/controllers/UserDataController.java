@@ -1,58 +1,49 @@
 package com.ethenthinkful.pokemonapijectapi.controllers;
 
 import java.util.List;
-import java.util.*;
-import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import com.ethenthinkful.pokemonapijectapi.model.UserData;
 import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
-import com.ethenthinkful.pokemonapijectapi.model.CardData;
-import com.ethenthinkful.pokemonapijectapi.repos.CardDataRepository;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
 public class UserDataController {
-	private UserDataRepository UserDataRepository;
+	private UserDataRepository repository;
 	
-	UserDataController(UserDataRepository UserDataRepository) {
-		this.UserDataRepository = UserDataRepository;
+	UserDataController(UserDataRepository repository) {
+		this.repository = repository;
 	}
 	
-	@RequestMapping(value = "/users", method = RequestMethod.POST, consumes = {"*/*"})
-	public UserData saveUserData(@RequestBody UserData userData) {
-		return UserDataRepository.save(userData);
-	}
-	
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@GetMapping("/users")
 	public List<UserData> getUsers() {
-		return UserDataRepository.findAll();
+		System.out.println("Hello! you've hit /users (before the query)");
+		return repository.findAll();
+	}
+	
+	@GetMapping("/users/{id}")
+	public UserData getUser(@PathVariable("id") int id) {
+		return repository.findById(id).get();
 	}
 
-	@RequestMapping(value = "/users/{id}", method=RequestMethod.GET)
-	public UserData getUserData(@PathVariable("id") int id) {
-		return UserDataRepository.findById(id).get();
+	@PostMapping("/users")
+	public UserData saveUser(@RequestBody UserData user) {
+		return repository.save(user);
 	}
 	
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteUserData(@PathVariable("id") int id) {
-		// Check if the entity exists in the database
-        if (!UserDataRepository.existsById(id)) {
+	@DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUserData(@PathVariable("id") int id) {
+        // Check if the entity exists in the database
+        if (!repository.existsById(id)) {
             return new ResponseEntity<>("Entity not found", HttpStatus.NOT_FOUND);
         }
 
         // If the entity exists, delete it
-        UserDataRepository.deleteById(id);
+        repository.deleteById(id);
 
         return new ResponseEntity<>("Entity deleted successfully", HttpStatus.OK);
     }

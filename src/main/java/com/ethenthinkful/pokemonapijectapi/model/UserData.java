@@ -12,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-//import jakarta.persistence.Column;
 
 @Entity
 @Table(name="userdata")
@@ -20,14 +19,11 @@ public class UserData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	//@Column(name = "username")
 	private String userName;
 	private String password;
-	private Timestamp measuredDateTime;
 
-	// @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="userdata")
-	// private List<CardData> cardData;
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="userdata") //could delete fetch=FetchType.EAGER because it could lead to more database queries resulting in performance issues 
+	private List<CardData> cardData;
 
 	public int getId() {
 		return id;
@@ -53,19 +49,12 @@ public class UserData {
 		this.password = password;
 	}
 
-	// public List<CardData> getCardData() {
-	// 	return cardData;
-	// }
-
-	// public void setCardData(List<CardData> cardData) {
-	// 	this.cardData = cardData;
-	// }
-
-	public Timestamp getMeasuredDateTime() {
-		return measuredDateTime;
+	public List<CardData> getCardData() {
+		return cardData;
 	}
 
-	public void setMeasuredDateTime(Timestamp measuredDateTime) {
-		this.measuredDateTime = measuredDateTime;
+	public void setCardData(List<CardData> cardData) {
+		this.cardData = cardData;
 	}
+
 }
