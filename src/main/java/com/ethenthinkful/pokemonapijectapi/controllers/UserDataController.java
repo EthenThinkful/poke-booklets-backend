@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ethenthinkful.pokemonapijectapi.service.LoginService;
 import com.ethenthinkful.pokemonapijectapi.model.UserData;
 import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
 
@@ -13,6 +15,9 @@ import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
 @RequestMapping("/api")
 @CrossOrigin
 public class UserDataController {
+	@Autowired
+    private LoginService loginService;
+
 	private UserDataRepository repository;
 	
 	UserDataController(UserDataRepository repository) {
@@ -29,6 +34,20 @@ public class UserDataController {
 	public UserData getUser(@PathVariable("id") int id) {
 		return repository.findById(id).get();
 	}
+
+	//---------------------------------new implement---------------------------------
+	@GetMapping("/userss")
+    public ResponseEntity<UserData> getExampleData(
+        @RequestParam String user, @RequestParam String password
+    ) {
+		UserData userData = loginService.findByUsername(user);
+		if (userData == null) {
+			return ResponseEntity.notFound().build();
+		}
+		ResponseEntity<UserData> userResponse = new ResponseEntity<>(userData, HttpStatus.OK);
+		return userResponse;
+    }
+	//---------------------------------end new implement---------------------------------
 
 	@PostMapping("/users")
 	public UserData saveUser(@RequestBody UserData user) {
