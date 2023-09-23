@@ -6,6 +6,6 @@ import com.ethenthinkful.pokemonapijectapi.model.UserData;
 
 public interface UserDataRepository extends JpaRepository<UserData, Integer> {
     //---------------------------------new implement---------------------------------
-    UserData findByUserName(String userName);
+    UserData findByUserNameAndPassword(String userName, String password);
     //---------------------------------end new implement---------------------------------
 }

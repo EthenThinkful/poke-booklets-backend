@@ -40,11 +40,12 @@ public class UserDataController {
     public ResponseEntity<UserData> getExampleData(
         @RequestParam String user, @RequestParam String password
     ) {
-		UserData userData = loginService.findByUsername(user);
+		UserData userData = loginService.findByUsernameAndPassword(user, password);
 		if (userData == null) {
 			return ResponseEntity.notFound().build();
 		}
 		ResponseEntity<UserData> userResponse = new ResponseEntity<>(userData, HttpStatus.OK);
+		System.out.println(userResponse);
 		return userResponse;
     }
 	//---------------------------------end new implement---------------------------------
