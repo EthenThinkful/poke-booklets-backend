@@ -14,6 +14,8 @@ public class CardData {
     private String pokemonCard;
     private Timestamp measuredDateTime;
     private boolean verified;
+    @Lob 
+    @Column(name="luhthang", length=300000)
     private String luhthang;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userdata_id", nullable = false)

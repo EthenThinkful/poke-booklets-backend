@@ -1,10 +1,15 @@
 package com.ethenthinkful.pokemonapijectapi.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+
 public class CardDataRequest {
 	private String pokemonCard;
 	private int userDataId;
 	private boolean verified;
 	private int cardSlot;
+	@Lob 
+    @Column(name="luhthang", length=300000)
 	private String luhthang;
 
     public String getPokemonCard(){
