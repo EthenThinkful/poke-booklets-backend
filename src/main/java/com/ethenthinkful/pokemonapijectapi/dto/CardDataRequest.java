@@ -8,8 +8,7 @@ public class CardDataRequest {
 	private int userDataId;
 	private boolean verified;
 	private int cardSlot;
-	@Lob 
-    @Column(name="luhthang", length=300000)
+	@Column(columnDefinition = "TEXT")
 	private String luhthang;
 
     public String getPokemonCard(){
