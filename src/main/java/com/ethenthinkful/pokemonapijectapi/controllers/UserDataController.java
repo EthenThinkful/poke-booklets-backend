@@ -8,8 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ethenthinkful.pokemonapijectapi.service.LoginService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.ethenthinkful.pokemonapijectapi.model.UserData;
 import com.ethenthinkful.pokemonapijectapi.repos.UserDataRepository;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api")
