@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+//grabbing local image
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+
 @Entity
 @Table(name = "carddata")
 public class CardData {
@@ -14,7 +20,6 @@ public class CardData {
     private String pokemonCard;
     private Timestamp measuredDateTime;
     private boolean verified;
-    @Column(columnDefinition = "TEXT")
     private String luhthang;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userdata_id", nullable = false)
@@ -61,7 +66,11 @@ public class CardData {
         this.userdata = userdata;
     }
 
-    public String getLuhthang() {
+    public String getLuhthang() throws IOException {
+        // String fileName = luhthang;
+        // Path basePath = Path.of(System.getProperty("user.dir"));
+        // Path filePath = basePath.resolve(fileName);
+        // byte[] imageBytes = Files.readAllBytes(filePath);
         return luhthang;
     }
 

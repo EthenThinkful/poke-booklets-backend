@@ -8,7 +8,6 @@ public class CardDataRequest {
 	private int userDataId;
 	private boolean verified;
 	private int cardSlot;
-	@Column(columnDefinition = "TEXT")
 	private String luhthang;
 
     public String getPokemonCard(){

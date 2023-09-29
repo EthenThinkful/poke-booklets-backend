@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,7 +83,13 @@ public class CardDataController {
 		CardData cardToVerify = cardList.get(cardSlot);
 		cardToVerify.setVerified(true);
 		String img = request.getLuhthang();
-		cardToVerify.setLuhThang(img);
+		String editedImg = characterRemove(img);
+		byte[] imageBytes = Base64.getDecoder().decode(editedImg);
+		String filename = "test1.png";
+		Path basePath = Path.of(System.getProperty("user.dir"));
+		Path filePath = basePath.resolve(filename);
+		Files.write(filePath, imageBytes);
+		cardToVerify.setLuhThang(filename);
 		CardData savedCard = userDataRepository.save(cardToVerify);
 		return savedCard;
 	}
@@ -102,12 +109,19 @@ public class CardDataController {
 	}
 
 	@RequestMapping(value = "/cards/{userDataId}", method = RequestMethod.GET)
-	public List<CardData> getSingleCardData(@PathVariable("userDataId") int userDataId) {
-		// return CardService.getCardById(userDataId);
+	public List<CardData> getSingleCardData(@PathVariable("userDataId") int userDataId) throws IOException {
 		List<CardData> cardDataList = cardDataRepository.findByUserdataId(userDataId);
-		// System.out.println("Hello! you've hit /cards!/userID (after the query)");
-		// System.out.println(cardDataList);
-		// //System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cardData));
+		for (CardData obj : cardDataList) {
+			String currLuhThang = obj.getLuhthang(); // Modify the value as per your requirement
+			if (currLuhThang != null) {
+			Path basePath = Path.of(System.getProperty("user.dir"));
+        	Path filePath = basePath.resolve(currLuhThang);
+        	byte[] imageBytes = Files.readAllBytes(filePath);
+			String base64String = Base64.getEncoder().encodeToString(imageBytes);
+			String fullLuhThang = "data:image/jpeg;base64," + base64String;
+			obj.setLuhThang(fullLuhThang);
+			}
+		}
 		return cardDataList;
 
 	}
