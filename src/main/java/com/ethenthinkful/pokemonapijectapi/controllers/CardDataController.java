@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Base64;
+import java.util.Comparator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -25,6 +26,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.http.HttpStatus;
@@ -100,7 +104,9 @@ public class CardDataController {
 		int cardSlot = request.getCardSlot();
 		cardSlot = cardSlot - 1;
 		UserData user = userDataRepository.findById(request.getUserDataId()).get();
-		List<CardData> cardList = user.getCardData();
+		List<CardData> cardList = user.getCardData().stream()
+		.sorted(Comparator.comparing(CardData::getId))
+		.collect(Collectors.toList());
 		CardData cardToVerify = cardList.get(cardSlot);
 		cardToVerify.setVerified(true);
 		String img = request.getLuhthang();
@@ -144,7 +150,6 @@ public class CardDataController {
 			}
 		}
 		return cardDataList;
-
 	}
 
 }
