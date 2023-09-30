@@ -1,6 +1,7 @@
 package com.ethenthinkful.pokemonapijectapi.controllers;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -65,12 +66,32 @@ public class CardDataController {
 		return cardDataRepository.save(cardData);
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~new implement~~~~~~~~~~~~~~~~~~~~~~~~
 	// get rid of n characters at beginning and end of string method
 	public String characterRemove(String x) {
 		int n = 23; // Number of characters to remove from the beginning and end
 		String result = x.substring(n);
 		return result;
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~new implement~~~~~~~~~~~~~~~~~~~~~~~~
+
+	public static String generateRandomString(int length) {
+		if (length <= 0) {
+			throw new IllegalArgumentException("Length must be greater than zero.");
+		}
+		// Define the characters allowed in the random string
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		// Create a Random object to generate random indices
+		Random random = new Random();
+		// Create a StringBuilder to build the random string
+		StringBuilder randomString = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			// Generate a random index to select a character from the characters string
+			int randomIndex = random.nextInt(characters.length());
+			// Append the randomly selected character to the StringBuilder
+			randomString.append(characters.charAt(randomIndex));
+		}
+		return randomString.toString();
 	}
 
 	@PutMapping("/cards")
@@ -85,7 +106,7 @@ public class CardDataController {
 		String img = request.getLuhthang();
 		String editedImg = characterRemove(img);
 		byte[] imageBytes = Base64.getDecoder().decode(editedImg);
-		String filename = "test1.png";
+		String filename = generateRandomString(50) + ".png";
 		Path basePath = Path.of(System.getProperty("user.dir"));
 		Path filePath = basePath.resolve(filename);
 		Files.write(filePath, imageBytes);
@@ -114,12 +135,12 @@ public class CardDataController {
 		for (CardData obj : cardDataList) {
 			String currLuhThang = obj.getLuhthang(); // Modify the value as per your requirement
 			if (currLuhThang != null) {
-			Path basePath = Path.of(System.getProperty("user.dir"));
-        	Path filePath = basePath.resolve(currLuhThang);
-        	byte[] imageBytes = Files.readAllBytes(filePath);
-			String base64String = Base64.getEncoder().encodeToString(imageBytes);
-			String fullLuhThang = "data:image/jpeg;base64," + base64String;
-			obj.setLuhThang(fullLuhThang);
+				Path basePath = Path.of(System.getProperty("user.dir"));
+				Path filePath = basePath.resolve(currLuhThang);
+				byte[] imageBytes = Files.readAllBytes(filePath);
+				String base64String = Base64.getEncoder().encodeToString(imageBytes);
+				String fullLuhThang = "data:image/jpeg;base64," + base64String;
+				obj.setLuhThang(fullLuhThang);
 			}
 		}
 		return cardDataList;
