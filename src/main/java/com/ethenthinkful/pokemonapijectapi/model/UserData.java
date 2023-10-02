@@ -21,6 +21,7 @@ public class UserData {
 	private int id;
 	private String userName;
 	private String password;
+	private String profilePic;
 
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="userdata") //could delete fetch=FetchType.EAGER because it could lead to more database queries resulting in performance issues 
 	private List<CardData> cardData;
@@ -55,6 +56,14 @@ public class UserData {
 
 	public void setCardData(List<CardData> cardData) {
 		this.cardData = cardData;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }
