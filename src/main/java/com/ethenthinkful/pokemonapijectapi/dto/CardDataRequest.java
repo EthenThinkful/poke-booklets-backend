@@ -1,8 +1,5 @@
 package com.ethenthinkful.pokemonapijectapi.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
-
 public class CardDataRequest {
 	private String pokemonCard;
 	private int userDataId;

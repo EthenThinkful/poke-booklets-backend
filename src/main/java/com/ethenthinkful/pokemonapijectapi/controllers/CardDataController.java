@@ -77,8 +77,6 @@ public class CardDataController {
 		return result;
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~new implement~~~~~~~~~~~~~~~~~~~~~~~~
-
 	public static String generateRandomString(int length) {
 		if (length <= 0) {
 			throw new IllegalArgumentException("Length must be greater than zero.");
@@ -120,7 +118,6 @@ public class CardDataController {
 		CardData savedCard = userDataRepository.save(cardToVerify);
 		return savedCard;
 	}
-	// ~~~~~~~~~~~~~~~~~~~~~~~~end new implement~~~~~~~~~~~~~~~~~~~~~~~~
 
 	@DeleteMapping("/cards/{id}")
 	public ResponseEntity<String> deleteCardData(@PathVariable("id") int id) {
@@ -151,5 +148,4 @@ public class CardDataController {
 		}
 		return cardDataList;
 	}
-
 }
