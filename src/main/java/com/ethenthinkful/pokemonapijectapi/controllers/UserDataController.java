@@ -44,9 +44,21 @@ public class UserDataController {
 
 	//used for displaying all users & their booklets on the home page
 	@GetMapping("/users")
-	public List<UserData> getUsers() {
+	public List<UserData> getUsers() throws IOException {
 		System.out.println("Hello! you've hit /users (before the query)");
-		return repository.findAll();
+		 List<UserData> repositories = repository.findAll();
+		 for (UserData obj : repositories) {
+			String pfp = obj.getProfilePic(); // Modify the value as per your requirement
+			if (pfp != null) {
+				Path basePath = Path.of(System.getProperty("user.dir"));
+				Path filePath = basePath.resolve(pfp);
+				byte[] imageBytes = Files.readAllBytes(filePath);
+				String base64String = Base64.getEncoder().encodeToString(imageBytes);
+				String pfpString = "data:image/jpeg;base64," + base64String;
+				obj.setProfilePic(pfpString);
+			}
+		}
+		 return repositories;
 	}
 
 	@GetMapping("/users/{id}")
