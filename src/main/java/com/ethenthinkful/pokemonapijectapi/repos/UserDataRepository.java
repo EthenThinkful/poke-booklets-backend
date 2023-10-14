@@ -6,7 +6,7 @@ import com.ethenthinkful.pokemonapijectapi.model.CardData;
 import com.ethenthinkful.pokemonapijectapi.model.UserData;
 
 public interface UserDataRepository extends JpaRepository<UserData, Integer> {
-    UserData findByUserNameAndPassword(String userName, String password);
+    UserData findByUserName(String userName);
     boolean existsByUserName(String userName);
     //---------------------------------new implement---------------------------------
     CardData save(CardData cardToVerify);

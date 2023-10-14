@@ -3,7 +3,6 @@ package com.ethenthinkful.pokemonapijectapi.dto;
 public class UserDataRequest {
     private int id;
     private String userName;
-	private String password;
 	private String profilePic;
 
     public int getId() {
@@ -21,14 +20,6 @@ public class UserDataRequest {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getProfilePic() {

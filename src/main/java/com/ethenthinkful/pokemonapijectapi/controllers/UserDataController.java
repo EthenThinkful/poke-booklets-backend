@@ -68,8 +68,8 @@ public class UserDataController {
 
 	@GetMapping("/userss")
 	public ResponseEntity<UserData> getExampleData(
-			@RequestParam String user, @RequestParam String password) {
-		UserData userData = loginService.findByUsernameAndPassword(user, password);
+			@RequestParam String user) {
+		UserData userData = loginService.findByUsername(user);
 		if (userData == null) {
 			return ResponseEntity.notFound().build();
 		}

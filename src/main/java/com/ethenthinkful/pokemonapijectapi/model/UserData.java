@@ -20,7 +20,6 @@ public class UserData {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String userName;
-	private String password;
 	private String profilePic;
 
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="userdata") //could delete fetch=FetchType.EAGER because it could lead to more database queries resulting in performance issues 
@@ -40,14 +39,6 @@ public class UserData {
 
 	public void setuserName(String userName) {
 		this.userName = userName;
-	}
-
-	public String getpassword() {
-		return password;
-	}
-
-	public void setpassword(String password) {
-		this.password = password;
 	}
 
 	public List<CardData> getCardData() {
