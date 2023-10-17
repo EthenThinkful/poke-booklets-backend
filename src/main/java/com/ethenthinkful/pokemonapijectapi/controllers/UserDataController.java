@@ -61,6 +61,8 @@ public class UserDataController {
 		 return repositories;
 	}
 
+
+
 	@GetMapping("/users/{id}")
 	public UserData getUser(@PathVariable("id") int id) {
 		return repository.findById(id).get();
@@ -149,10 +151,24 @@ public class UserDataController {
 				Path filePath = basePath.resolve(pfp);
 				byte[] imageBytes = Files.readAllBytes(filePath);
 				String base64String = Base64.getEncoder().encodeToString(imageBytes);
+				System.out.println(base64String);
 				String fullPfp = "data:image/jpeg;base64," + base64String;
 				user.setProfilePic(fullPfp);
 			}
 		return user;
+	}
+
+	@RequestMapping(value = "/usersss/{userDataId}", method = RequestMethod.GET) 
+	public byte[] getImageBytePfp(@PathVariable("userDataId") int userDataId) throws IOException {
+		UserData user = repository.findById(userDataId).get();
+			String pfp = user.getProfilePic();
+			if (pfp != null) {
+				Path basePath = Path.of(System.getProperty("user.dir"));
+				Path filePath = basePath.resolve(pfp);
+				byte[] imageBytes = Files.readAllBytes(filePath);
+				return imageBytes;
+			}
+		return null;
 	}
 	
 	@DeleteMapping("/users/{id}")
