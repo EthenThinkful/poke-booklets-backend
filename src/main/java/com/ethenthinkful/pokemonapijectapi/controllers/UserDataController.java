@@ -138,14 +138,6 @@ public class UserDataController {
 		user.setNickName(request.getNickName());
 		UserData savedUser = repository.save(user);
 		return savedUser;
-		// if (repository.existsByUserName(user.getuserName())) {
-		// 	System.out.println("This user exists, now lets update it's nickname!");
-		// 	repository.save(user);
-		// 	ResponseEntity<String> responseEntity = new ResponseEntity<>("nickname updated successfully!", HttpStatus.OK);
-		// 	return responseEntity;
-		// }
-		// ResponseEntity<String> responseEntity = ResponseEntity.badRequest().body("This Username does not exist therefore you cannot update it's nickname.");
-		// return responseEntity;
 	}
 
 	@RequestMapping(value = "/userss/{userDataId}", method = RequestMethod.GET) 
