@@ -159,14 +159,15 @@ public class UserDataController {
 	}
 
 	@RequestMapping(value = "/usersss/{userDataId}", method = RequestMethod.GET) 
-	public byte[] getImageBytePfp(@PathVariable("userDataId") int userDataId) throws IOException {
+	public String getImageBytePfp(@PathVariable("userDataId") int userDataId) throws IOException {
 		UserData user = repository.findById(userDataId).get();
 			String pfp = user.getProfilePic();
 			if (pfp != null) {
 				Path basePath = Path.of(System.getProperty("user.dir"));
 				Path filePath = basePath.resolve(pfp);
 				byte[] imageBytes = Files.readAllBytes(filePath);
-				return imageBytes;
+				String base64String = Base64.getEncoder().encodeToString(imageBytes);
+				return base64String;
 			}
 		return null;
 	}
