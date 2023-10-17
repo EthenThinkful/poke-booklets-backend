@@ -4,6 +4,15 @@ public class UserDataRequest {
     private int id;
     private String userName;
 	private String profilePic;
+    private String nickName;
+
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public int getId() {
         return this.id;
