@@ -91,7 +91,6 @@ public class UserDataController {
 		return responseEntity;
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~to do: make this a utility function~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public String characterRemove(String x) {
 		int n = 23; // Number of characters to remove from the beginning and end
 		String result = x.substring(n);
@@ -116,9 +115,7 @@ public class UserDataController {
 		}
 		return randomString.toString();
 	}
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~end utility function~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~new implement~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	@PutMapping("/users")
 	public UserData saveProfilePic(@RequestBody UserDataRequest request) throws IOException {
 		System.out.println("You hit /users to update a profile pic!");
@@ -131,6 +128,14 @@ public class UserDataController {
 		Path filePath = basePath.resolve(filename);
 		Files.write(filePath, imageBytes);
 		user.setProfilePic(filename);
+		UserData savedUser = repository.save(user);
+		return savedUser;
+	}
+
+	@PutMapping("/userss")
+	public UserData updateNickName(@RequestBody UserDataRequest request) {
+		UserData user = repository.findById(request.getId()).get();
+		user.setNickName(request.getNickName());
 		UserData savedUser = repository.save(user);
 		return savedUser;
 	}
@@ -150,8 +155,6 @@ public class UserDataController {
 		return user;
 	}
 	
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~end new implement~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 	@DeleteMapping("/users/{id}")
 	public ResponseEntity<String> deleteUserData(@PathVariable("id") int id) {
 		// Check if the entity exists in the database
